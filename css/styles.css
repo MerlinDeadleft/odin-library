@@ -8,5 +8,33 @@
 
 :root {
     font-family: sans-serif;
-    font-size: 24px;
+    font-size: 20px;
+    background-color: #EDE8D0;
+
+    --header-text-color: hsl(47, 0%, 20%);
+}
+
+header {
+    background-color: #C9C5B1;
+    color: var(--header-text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    border-bottom: 2px solid hsl(50, 5%, 65%);
+}
+
+h1 {
+    padding: 10px 10px 10px 20px;
+}
+
+.header-link {
+    text-decoration: none;
+    color: var(--header-text-color);
+    align-content: center;
+    padding: 10px 20px;
+}
+
+.header-link:hover {
+    background-color: #787569;
+    color: lightgray;
 }
