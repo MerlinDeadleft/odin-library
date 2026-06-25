@@ -95,6 +95,7 @@ function showLibraryInDOM() {
         bookCard.appendChild(pagesElement);
 
         let statusElement = document.createElement("p");
+        statusElement.classList.add("status-container");
         let statusPrefixElement = document.createElement("span");
         statusPrefixElement.classList.add("status-prefix");
         statusPrefixElement.textContent = "Status: "
@@ -104,6 +105,12 @@ function showLibraryInDOM() {
         statusValueElement.textContent = book.status;
         statusElement.appendChild(statusValueElement);
         bookCard.appendChild(statusElement);
+
+        let detailsButton = document.createElement("button");
+        detailsButton.id = book.id;
+        detailsButton.classList.add("details-button");
+        detailsButton.textContent = "Details";
+        bookCard.appendChild(detailsButton);
 
         bookCardContainer.appendChild(bookCard);
     }
