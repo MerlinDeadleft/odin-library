@@ -48,10 +48,38 @@ h1 {
 }
 
 .book-card {
-    background-color: var(--main-color);
+    background: var(--main-color);
     padding: 20px;
     border-radius: 10px;
     flex: 0 0 200px;
     min-height: 275px;
     box-shadow: 0 0 10px -2px var(--header-text-color);
+}
+
+.book-card .author-prefix,
+.book-card .author-first-name,
+.book-card .pages,
+.book-card .status-prefix {
+    display: none;
+}
+
+.book-card h2 {
+    margin-bottom: 15px;
+}
+
+.book-card .status-container {
+    position: relative;
+    bottom: 0;
+}
+
+.book-card[data-status="PlanToRead"] {
+    background: linear-gradient(90deg, #9E5B52 10px, var(--main-color) 10px);
+}
+
+.book-card[data-status="Reading"] {
+    background: linear-gradient(90deg, #B88A44 10px, var(--main-color) 10px);
+}
+
+.book-card[data-status="Finished"] {
+    background: linear-gradient(90deg, #607055 10px, var(--main-color) 10px);
 }
