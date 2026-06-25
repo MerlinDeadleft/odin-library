@@ -27,8 +27,10 @@ function Book(title, author, pages, status = Status.PlanToRead) {
 
 const myLibrary = [];
 const bookCardContainer = document.querySelector(".book-card-container");
+let currentDetailsShownId = null;
 
 //main
+bookCardContainer.addEventListener("click", handleBookCardDetailsButtonClicked);
 addDefaultLibrary();
 showLibraryInDOM();
 
@@ -102,7 +104,7 @@ function showLibraryInDOM() {
         statusElement.appendChild(statusPrefixElement);
         let statusValueElement = document.createElement("span");
         statusValueElement.classList.add("status");
-        statusValueElement.textContent = book.status;
+        statusValueElement.textContent = bookStatusToPrettyString(book.status);
         statusElement.appendChild(statusValueElement);
         bookCard.appendChild(statusElement);
 
@@ -114,4 +116,40 @@ function showLibraryInDOM() {
 
         bookCardContainer.appendChild(bookCard);
     }
+}
+
+function bookStatusToPrettyString(status) {
+    switch (status) {
+        case Status.PlanToRead:
+            return "Plan To Read";
+        case Status.Reading:
+            return "Reading";
+        case Status.Finished:
+            return "Finished";
+        default:
+            break;
+    }
+}
+
+function handleBookCardDetailsButtonClicked(clickEvent) {
+    if(!clickEvent.target.classList.contains("details-button")) {
+        return;
+    }
+
+    if(currentDetailsShownId) {
+        let currentDetailsBookCard = document.querySelector(`[data-id="${currentDetailsShownId}"]`);
+        delete currentDetailsBookCard.dataset.showDetails;
+        let currentDetailsButton = document.getElementById(`${currentDetailsShownId}`);
+        currentDetailsButton.textContent = "Details";
+
+        if(clickEvent.target.id === currentDetailsShownId) {
+            currentDetailsShownId = null;
+            return;
+        }
+    }
+
+    let clickedBookCard = document.querySelector(`[data-id="${clickEvent.target.id}"]`);
+    clickedBookCard.dataset.showDetails = '';
+    clickEvent.target.textContent = "Close Details";
+    currentDetailsShownId = clickEvent.target.id;
 }
