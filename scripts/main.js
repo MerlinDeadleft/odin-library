@@ -53,7 +53,7 @@ function addDefaultLibrary() {
     let redRising = new Book("Red Rising", sanderson, 382, Status.Finished);
     myLibrary.push(redRising);
 
-    let goldenSon = new Book("Golden Sun", sanderson, 466, Status.Finished);
+    let goldenSon = new Book("Golden Son", sanderson, 466, Status.Finished);
     myLibrary.push(goldenSon);
 
     let morningStar = new Book("Morning Star", sanderson, 524, Status.Reading);
@@ -90,6 +90,7 @@ function showLibraryInDOM() {
         bookCard.appendChild(authorElement);
 
         let pagesElement = document.createElement("p");
+        pagesElement.classList.add("pages");
         pagesElement.textContent = `${book.pages} pages`;
         bookCard.appendChild(pagesElement);
 
