@@ -176,7 +176,8 @@ h1 {
     color: lightgray;
 }
 
-#add-book-modal {
+#add-book-modal,
+#confirm-remove-modal {
     margin: auto;
     padding: 10px;
     background-color: var(--main-color);
@@ -214,7 +215,8 @@ h1 {
     color: var(--text-color);
 }
 
-#add-book-modal button {
+#add-book-modal button,
+#confirm-remove-modal button {
     background-color: transparent;
     margin: auto auto 0;
     border: 2px solid #787569;
@@ -224,8 +226,36 @@ h1 {
     font-size: 0.8rem;
 }
 
-#add-book-modal button:hover {
+#add-book-modal button:hover,
+#confirm-remove-modal button:hover {
     cursor: pointer;
     color: lightgray;
     background-color: #787569;
+}
+
+.confirm-button-container {
+    margin-top: 15px;
+}
+
+#confirm-remove-modal {
+    text-align: center;
+}
+
+#confirm-remove-button {
+    margin-right: 25px !important;
+}
+
+#confirm-remove-button:hover {
+    cursor: pointer;
+    color: lightgray;
+    background-color: #9E5B52 !important;
+    border: 2px solid #9E5B52;
+}
+
+#remove-modal-book-title {
+    display: block;
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
 }

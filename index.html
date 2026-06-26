@@ -40,8 +40,8 @@
             <button type="button" command="close" commandfor="add-book-modal">Cancel</button>
     </dialog>
 
-    <dialog id="confirm-remove-modal">
-        <h2>Do you really want to remove <span id="remove-modal-book-title">Title</span> from the library?</h2>
+    <dialog id="confirm-remove-modal" closedby="any">
+        <h3>Do you really want to remove <span id="remove-modal-book-title">"Title"</span> from the library?</h3>
         <div class="confirm-button-container">
             <button type="button" id="confirm-remove-button">Yes</button>
             <button type="button" command="close" commandfor="confirm-remove-modal">No</button>
