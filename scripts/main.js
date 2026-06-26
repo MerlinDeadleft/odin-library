@@ -31,6 +31,8 @@ let currentDetailsShownId = null;
 
 //main
 bookCardContainer.addEventListener("click", handleBookCardDetailsButtonClicked);
+bookCardContainer.addEventListener("change", handleBookCardStatusChanged);
+
 addDefaultLibrary();
 showLibraryInDOM();
 
@@ -168,4 +170,18 @@ function handleBookCardDetailsButtonClicked(clickEvent) {
     clickedStatusSelect.removeAttribute("disabled");
 
     currentDetailsShownId = clickEvent.target.id;
+}
+
+function handleBookCardStatusChanged(changeEvent) {
+    if(!changeEvent.target.classList.contains("status-select")) {
+        return;
+    }
+
+    let id = changeEvent.target.id.substr(7);
+
+    let changedBook = myLibrary.find(book => book.id === id);
+    changedBook.status = changeEvent.target.value;
+
+    let changedBookCard = document.querySelector(`[data-id="${id}"]`);
+    changedBookCard.dataset.status = changedBook.status;
 }
