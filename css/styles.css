@@ -140,3 +140,18 @@ h1 {
     opacity: 1;
     padding: 0;
 }
+
+#add-book-button {
+    margin-left: auto;
+    background-color: var(--main-color);
+    border: none;
+    color: var(--text-color);
+    font-size: 1em;
+    padding: 10px 20px;
+}
+
+#add-book-button:hover {
+    cursor: pointer;
+    background-color: #787569;
+    color: lightgray;
+}
