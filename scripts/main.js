@@ -102,11 +102,26 @@ function showLibraryInDOM() {
         statusPrefixElement.classList.add("status-prefix");
         statusPrefixElement.textContent = "Status: "
         statusElement.appendChild(statusPrefixElement);
+
         let statusValueElement = document.createElement("span");
         statusValueElement.classList.add("status");
         statusValueElement.textContent = bookStatusToPrettyString(book.status);
         statusElement.appendChild(statusValueElement);
         bookCard.appendChild(statusElement);
+
+        let statusSelectElement = document.createElement("select");
+        statusSelectElement.id = `select-${book.id}`;
+        statusSelectElement.classList.add("status-select");
+        statusSelectElement.setAttribute("name", "status-select")
+        statusSelectElement.setAttribute("disabled", "");
+        for(let status in Status) {
+            let statusOptionElement = document.createElement("option");
+            statusOptionElement.setAttribute("value", status);
+            statusOptionElement.textContent = bookStatusToPrettyString(status);
+            statusSelectElement.appendChild(statusOptionElement);
+        }
+        statusSelectElement.value = book.status;
+        statusElement.appendChild(statusSelectElement);
 
         let detailsButton = document.createElement("button");
         detailsButton.id = book.id;
@@ -141,6 +156,8 @@ function handleBookCardDetailsButtonClicked(clickEvent) {
         delete currentDetailsBookCard.dataset.showDetails;
         let currentDetailsButton = document.getElementById(`${currentDetailsShownId}`);
         currentDetailsButton.textContent = "Details";
+        let currentStatusSelect = document.querySelector(`#select-${currentDetailsShownId}`);
+        currentStatusSelect.setAttribute("disabled", "");
 
         if(clickEvent.target.id === currentDetailsShownId) {
             currentDetailsShownId = null;
@@ -151,5 +168,9 @@ function handleBookCardDetailsButtonClicked(clickEvent) {
     let clickedBookCard = document.querySelector(`[data-id="${clickEvent.target.id}"]`);
     clickedBookCard.dataset.showDetails = '';
     clickEvent.target.textContent = "Close Details";
+
+    let clickedStatusSelect = document.querySelector(`#select-${clickEvent.target.id}`);
+    clickedStatusSelect.removeAttribute("disabled");
+
     currentDetailsShownId = clickEvent.target.id;
 }
