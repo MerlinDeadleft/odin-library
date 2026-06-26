@@ -18,27 +18,26 @@
     </main>
 
     <dialog id="add-book-modal" closedby="any">
-        <h2>Add new book to library:</h2>
+        <h2>Add new book to library</h2>
         <form id="add-book-form" method="dialog">
-            <label for="title">Title:
-                <input type="text" name="title" id="title" required>
-            </label>
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="title" required>
             <p>Author:</p>
-            <label for="author-first-name">First Name: </label>
+            <label for="author-first-name">First Name:</label>
             <input type="text" name="author-first-name" id="author-first-name" required>
-            <label for="author-last-name">Last Name: </label>
+            <label for="author-last-name">Last Name:</label>
             <input type="text" name="author-last-name" id="author-last-name" required>
-            <label for="pages">Pages: </label>
-            <input type="number" name="pages" id="pages" min="1" required>
-            <label for="status">Status: </label>
+            <label for="pages">Pages:</label>
+            <input type="number" name="pages" id="pages" min="1" value="1" required>
+            <label for="status">Status:</label>
             <select name="status" id="status" required>
                 <option value="PlanToRead" selected>Plan To Read</option>
                 <option value="Reading">Reading</option>
                 <option value="Finished">Finished</option>
             </select>
-            <button>Add Book</button>
-            <button type="button" command="close" commandfor="add-book-modal">Cancel</button>
         </form>
+            <button form="add-book-form">Add Book</button>
+            <button type="button" command="close" commandfor="add-book-modal">Cancel</button>
     </dialog>
 
     <script src="scripts/main.js"></script>
