@@ -129,11 +129,21 @@ function addBookToDOM(book) {
         statusElement.appendChild(statusSelectElement);
         bookCard.appendChild(statusElement);
 
+        let buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("book-card-button-container");
+        bookCard.appendChild(buttonContainer);
+
         let detailsButton = document.createElement("button");
         detailsButton.id = book.id;
         detailsButton.classList.add("details-button");
         detailsButton.textContent = "Details";
-        bookCard.appendChild(detailsButton);
+        buttonContainer.appendChild(detailsButton);
+
+        let removeButton = document.createElement("button");
+        removeButton.id = `remove-${book.id}`;
+        removeButton.classList.add("remove-button");
+        removeButton.textContent = "Remove";
+        buttonContainer.appendChild(removeButton);
 
         bookCardContainer.appendChild(bookCard);
 }
@@ -195,10 +205,17 @@ function handleBookCardStatusChanged(changeEvent) {
 }
 
 function handleCloseAddBookModal(closeEvent) {
+    if(close.target.id !== "add-book-modal") {
+        return;
+    }
+
     addBookForm.reset();
 }
 
 function handleSubmitAddBookForm(submitEvent) {
+    if(submitEvent.target.id !== "add-book-form") {
+        return;
+    }
     submitEvent.preventDefault();
     const formData = new FormData(submitEvent.target);
     const formObject = Object.fromEntries(formData.entries());

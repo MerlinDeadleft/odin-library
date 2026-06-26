@@ -108,10 +108,14 @@ h1 {
     background: linear-gradient(90deg, #607055 10px, var(--main-color) 10px);
 }
 
-.details-button {
-    display: block;
-    background-color: transparent;
+.book-card-button-container {
     margin: auto auto 0;
+    display: block;
+}
+
+.details-button,
+.remove-button {
+    background-color: transparent;
     border: 2px solid #787569;
     border-radius: 10px;
     padding: 5px 10px;
@@ -119,10 +123,26 @@ h1 {
     font-size: 0.7rem;
 }
 
+.remove-button {
+    display: none;
+}
+
+.book-card[data-show-details] .remove-button {
+    display: unset;
+    margin: 0 0 0 50px;
+}
+
 .details-button:hover {
     cursor: pointer;
     color: lightgray;
     background-color: #787569;
+}
+
+.remove-button:hover {
+    cursor: pointer;
+    color: lightgray;
+    background-color: #9E5B52;
+    border: 2px solid #9E5B52;
 }
 
 .status-select {
