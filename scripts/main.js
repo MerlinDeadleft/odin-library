@@ -29,13 +29,19 @@ const myLibrary = [];
 const bookCardContainer = document.querySelector(".book-card-container");
 const addBookModal = document.querySelector("#add-book-modal");
 const addBookForm = document.querySelector("#add-book-form");
+const confirmRemoveModal = document.querySelector("#confirm-remove-modal");
+const confirmRemoveModalBookTitle = document.querySelector("#remove-modal-book-title");
+const confirmRemoveButton = document.querySelector("#confirm-remove-button");
 let currentDetailsShownId = null;
 
 //main
 bookCardContainer.addEventListener("click", handleBookCardDetailsButtonClicked);
+bookCardContainer.addEventListener("click", handleRemoveBookClicked);
 bookCardContainer.addEventListener("change", handleBookCardStatusChanged);
 addBookModal.addEventListener("close", handleCloseAddBookModal);
 addBookForm.addEventListener("submit", handleSubmitAddBookForm);
+confirmRemoveButton.addEventListener("click", handleConfirmRemoveClicked);
+confirmRemoveModal.addEventListener("close", handleCofirmRemoveModalClosed);
 
 addDefaultLibrary();
 showLibraryInDOM();
@@ -78,74 +84,74 @@ function showLibraryInDOM() {
 }
 
 function addBookToDOM(book) {
-    let bookCard = document.createElement("div");
-        bookCard.classList.add("book-card");
-        bookCard.dataset.id = book.id;
-        bookCard.dataset.status = book.status;
+    const bookCard = document.createElement("div");
+    bookCard.classList.add("book-card");
+    bookCard.dataset.id = book.id;
+    bookCard.dataset.status = book.status;
 
-        let titleElement = document.createElement("h2");
-        titleElement.textContent = book.title;
-        bookCard.appendChild(titleElement);
+    const titleElement = document.createElement("h2");
+    titleElement.textContent = book.title;
+    bookCard.appendChild(titleElement);
 
-        let authorElement = document.createElement("p");
-        let authorPrefixElement = document.createElement("span");
-        authorPrefixElement.classList.add("author-prefix");
-        authorPrefixElement.textContent = "Author: ";
-        authorElement.appendChild(authorPrefixElement);
-        let firstNameElement = document.createElement("span");
-        firstNameElement.textContent = book.author.firstName;
-        firstNameElement.classList.add("author-first-name");
-        let lastNameElement = document.createElement("span");
-        lastNameElement.textContent = book.author.lastName;
-        authorElement.appendChild(firstNameElement);
-        authorElement.appendChild(document.createTextNode(" "));
-        authorElement.appendChild(lastNameElement);
-        bookCard.appendChild(authorElement);
+    const authorElement = document.createElement("p");
+    const authorPrefixElement = document.createElement("span");
+    authorPrefixElement.classList.add("author-prefix");
+    authorPrefixElement.textContent = "Author: ";
+    authorElement.appendChild(authorPrefixElement);
+    const firstNameElement = document.createElement("span");
+    firstNameElement.textContent = book.author.firstName;
+    firstNameElement.classList.add("author-first-name");
+    const lastNameElement = document.createElement("span");
+    lastNameElement.textContent = book.author.lastName;
+    authorElement.appendChild(firstNameElement);
+    authorElement.appendChild(document.createTextNode(" "));
+    authorElement.appendChild(lastNameElement);
+    bookCard.appendChild(authorElement);
 
-        let pagesElement = document.createElement("p");
-        pagesElement.classList.add("pages");
-        pagesElement.textContent = `${book.pages} pages`;
-        bookCard.appendChild(pagesElement);
+    const pagesElement = document.createElement("p");
+    pagesElement.classList.add("pages");
+    pagesElement.textContent = `${book.pages} pages`;
+    bookCard.appendChild(pagesElement);
 
-        let statusElement = document.createElement("p");
-        statusElement.classList.add("status-container");
-        let statusPrefixElement = document.createElement("span");
-        statusPrefixElement.classList.add("status-prefix");
-        statusPrefixElement.textContent = "Status: "
-        statusElement.appendChild(statusPrefixElement);
+    const statusElement = document.createElement("p");
+    statusElement.classList.add("status-container");
+    const statusPrefixElement = document.createElement("span");
+    statusPrefixElement.classList.add("status-prefix");
+    statusPrefixElement.textContent = "Status: "
+    statusElement.appendChild(statusPrefixElement);
 
-        let statusSelectElement = document.createElement("select");
-        statusSelectElement.id = `select-${book.id}`;
-        statusSelectElement.classList.add("status-select");
-        statusSelectElement.setAttribute("name", "status-select")
-        statusSelectElement.setAttribute("disabled", "");
-        for(let status in Status) {
-            let statusOptionElement = document.createElement("option");
-            statusOptionElement.setAttribute("value", status);
-            statusOptionElement.textContent = bookStatusToPrettyString(status);
-            statusSelectElement.appendChild(statusOptionElement);
-        }
-        statusSelectElement.value = book.status;
-        statusElement.appendChild(statusSelectElement);
-        bookCard.appendChild(statusElement);
+    const statusSelectElement = document.createElement("select");
+    statusSelectElement.id = `select-${book.id}`;
+    statusSelectElement.classList.add("status-select");
+    statusSelectElement.setAttribute("name", "status-select")
+    statusSelectElement.setAttribute("disabled", "");
+    for(let status in Status) {
+        const statusOptionElement = document.createElement("option");
+        statusOptionElement.setAttribute("value", status);
+        statusOptionElement.textContent = bookStatusToPrettyString(status);
+        statusSelectElement.appendChild(statusOptionElement);
+    }
+    statusSelectElement.value = book.status;
+    statusElement.appendChild(statusSelectElement);
+    bookCard.appendChild(statusElement);
 
-        let buttonContainer = document.createElement("div");
-        buttonContainer.classList.add("book-card-button-container");
-        bookCard.appendChild(buttonContainer);
+    const buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("book-card-button-container");
+    bookCard.appendChild(buttonContainer);
 
-        let detailsButton = document.createElement("button");
-        detailsButton.id = book.id;
-        detailsButton.classList.add("details-button");
-        detailsButton.textContent = "Details";
-        buttonContainer.appendChild(detailsButton);
+    const detailsButton = document.createElement("button");
+    detailsButton.id = book.id;
+    detailsButton.classList.add("details-button");
+    detailsButton.textContent = "Details";
+    buttonContainer.appendChild(detailsButton);
 
-        let removeButton = document.createElement("button");
-        removeButton.id = `remove-${book.id}`;
-        removeButton.classList.add("remove-button");
-        removeButton.textContent = "Remove";
-        buttonContainer.appendChild(removeButton);
+    const removeButton = document.createElement("button");
+    removeButton.id = `remove-${book.id}`;
+    removeButton.classList.add("remove-button");
+    removeButton.textContent = "Remove";
+    buttonContainer.appendChild(removeButton);
 
-        bookCardContainer.appendChild(bookCard);
+    bookCardContainer.appendChild(bookCard);
 }
 
 function bookStatusToPrettyString(status) {
@@ -167,11 +173,11 @@ function handleBookCardDetailsButtonClicked(clickEvent) {
     }
 
     if(currentDetailsShownId) {
-        let currentDetailsBookCard = document.querySelector(`[data-id="${currentDetailsShownId}"]`);
+        const currentDetailsBookCard = document.querySelector(`[data-id="${currentDetailsShownId}"]`);
         delete currentDetailsBookCard.dataset.showDetails;
-        let currentDetailsButton = document.getElementById(`${currentDetailsShownId}`);
+        const currentDetailsButton = document.getElementById(`${currentDetailsShownId}`);
         currentDetailsButton.textContent = "Details";
-        let currentStatusSelect = document.querySelector(`#select-${currentDetailsShownId}`);
+        const currentStatusSelect = document.querySelector(`#select-${currentDetailsShownId}`);
         currentStatusSelect.setAttribute("disabled", "");
 
         if(clickEvent.target.id === currentDetailsShownId) {
@@ -180,11 +186,11 @@ function handleBookCardDetailsButtonClicked(clickEvent) {
         }
     }
 
-    let clickedBookCard = document.querySelector(`[data-id="${clickEvent.target.id}"]`);
+    const clickedBookCard = document.querySelector(`[data-id="${clickEvent.target.id}"]`);
     clickedBookCard.dataset.showDetails = '';
     clickEvent.target.textContent = "Close Details";
 
-    let clickedStatusSelect = document.querySelector(`#select-${clickEvent.target.id}`);
+    const clickedStatusSelect = document.querySelector(`#select-${clickEvent.target.id}`);
     clickedStatusSelect.removeAttribute("disabled");
 
     currentDetailsShownId = clickEvent.target.id;
@@ -195,17 +201,17 @@ function handleBookCardStatusChanged(changeEvent) {
         return;
     }
 
-    let id = changeEvent.target.id.substr(7);
+    const id = changeEvent.target.id.substr(7);
 
-    let changedBook = myLibrary.find(book => book.id === id);
+    const changedBook = myLibrary.find(book => book.id === id);
     changedBook.status = changeEvent.target.value;
 
-    let changedBookCard = document.querySelector(`[data-id="${id}"]`);
+    const changedBookCard = document.querySelector(`[data-id="${id}"]`);
     changedBookCard.dataset.status = changedBook.status;
 }
 
 function handleCloseAddBookModal(closeEvent) {
-    if(close.target.id !== "add-book-modal") {
+    if(closeEvent.target.id !== "add-book-modal") {
         return;
     }
 
@@ -226,4 +232,50 @@ function handleSubmitAddBookForm(submitEvent) {
     addBookToDOM(book);
 
     addBookModal.close();
+}
+
+function handleRemoveBookClicked(clickEvent) {
+    if(!clickEvent.target.classList.contains("remove-button")) {
+        return;
+    }
+
+    const id = clickEvent.target.id.substr(7);
+    const bookToRemove = myLibrary.find(book => book.id === id);
+
+    confirmRemoveModal.dataset.bookId = id;
+    confirmRemoveModalBookTitle.textContent = `"${bookToRemove.title}"`;
+    confirmRemoveModal.showModal();
+}
+
+function handleConfirmRemoveClicked(clickEvent) {
+    if(clickEvent.target.id !== "confirm-remove-button") {
+        return;
+    }
+
+    const id = confirmRemoveModal.dataset.bookId;
+
+    if(currentDetailsShownId !== null) {
+        currentDetailsShownId = null;
+    }
+
+    console.log(myLibrary);
+    const bookToRemove = myLibrary.find(book => book.id === id);
+    const index = myLibrary.indexOf(bookToRemove);
+    console.log(index);
+
+    myLibrary.splice(index, 1);
+    console.log(myLibrary);
+
+    const bookCard = document.querySelector(`[data-id="${id}"]`);
+    bookCardContainer.removeChild(bookCard);
+
+    confirmRemoveModal.close();
+}
+
+function handleCofirmRemoveModalClosed(closeEvent) {
+    if(closeEvent.target.id !== "confirm-remove-modal") {
+        return;
+    }
+
+    delete confirmRemoveModal.dataset.bookId;
 }
