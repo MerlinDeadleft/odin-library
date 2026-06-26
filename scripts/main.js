@@ -27,11 +27,15 @@ function Book(title, author, pages, status = Status.PlanToRead) {
 
 const myLibrary = [];
 const bookCardContainer = document.querySelector(".book-card-container");
+const addBookModal = document.querySelector("#add-book-modal");
+const addBookForm = document.querySelector("#add-book-form");
 let currentDetailsShownId = null;
 
 //main
 bookCardContainer.addEventListener("click", handleBookCardDetailsButtonClicked);
 bookCardContainer.addEventListener("change", handleBookCardStatusChanged);
+addBookModal.addEventListener("close", handleCloseAddBookModal);
+addBookForm.addEventListener("submit", handleSubmitAddBookForm);
 
 addDefaultLibrary();
 showLibraryInDOM();
@@ -69,7 +73,12 @@ function addDefaultLibrary() {
 
 function showLibraryInDOM() {
     for(const book of myLibrary) {
-        let bookCard = document.createElement("div");
+        addBookToDOM(book);
+    }
+}
+
+function addBookToDOM(book) {
+    let bookCard = document.createElement("div");
         bookCard.classList.add("book-card");
         bookCard.dataset.id = book.id;
         bookCard.dataset.status = book.status;
@@ -127,7 +136,6 @@ function showLibraryInDOM() {
         bookCard.appendChild(detailsButton);
 
         bookCardContainer.appendChild(bookCard);
-    }
 }
 
 function bookStatusToPrettyString(status) {
@@ -184,4 +192,21 @@ function handleBookCardStatusChanged(changeEvent) {
 
     let changedBookCard = document.querySelector(`[data-id="${id}"]`);
     changedBookCard.dataset.status = changedBook.status;
+}
+
+function handleCloseAddBookModal(closeEvent) {
+    addBookForm.reset();
+}
+
+function handleSubmitAddBookForm(submitEvent) {
+    submitEvent.preventDefault();
+    const formData = new FormData(submitEvent.target);
+    const formObject = Object.fromEntries(formData.entries());
+
+    const author = new Author(formObject["author-first-name"], formObject["author-last-name"]);
+    const book = new Book(formObject.title, author, formObject.pages, formObject.status);
+    myLibrary.push(book);
+    addBookToDOM(book);
+
+    addBookModal.close();
 }
