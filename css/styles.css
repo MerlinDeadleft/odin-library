@@ -259,3 +259,11 @@ h1 {
 dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.4);
 }
+
+#empty-message {
+    display: none;
+}
+
+#empty-message:only-child {
+    display: unset;
+}
