@@ -103,12 +103,6 @@ function showLibraryInDOM() {
         statusPrefixElement.textContent = "Status: "
         statusElement.appendChild(statusPrefixElement);
 
-        let statusValueElement = document.createElement("span");
-        statusValueElement.classList.add("status");
-        statusValueElement.textContent = bookStatusToPrettyString(book.status);
-        statusElement.appendChild(statusValueElement);
-        bookCard.appendChild(statusElement);
-
         let statusSelectElement = document.createElement("select");
         statusSelectElement.id = `select-${book.id}`;
         statusSelectElement.classList.add("status-select");
@@ -122,6 +116,7 @@ function showLibraryInDOM() {
         }
         statusSelectElement.value = book.status;
         statusElement.appendChild(statusSelectElement);
+        bookCard.appendChild(statusElement);
 
         let detailsButton = document.createElement("button");
         detailsButton.id = book.id;

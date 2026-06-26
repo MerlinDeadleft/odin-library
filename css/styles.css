@@ -124,3 +124,19 @@ h1 {
     color: lightgray;
     background-color: #787569;
 }
+
+.status-select {
+    color: var(--text-color);
+    font-size: 1em;
+    background-color: transparent;
+    border: 2px solid #787569;
+    border-radius: 10px;
+    padding: 5px 0 5px 10px;
+}
+
+.status-select[disabled] {
+    border: none;
+    appearance: none;
+    opacity: 1;
+    padding: 0;
+}
