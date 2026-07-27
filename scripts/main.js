@@ -4,25 +4,30 @@ const Status = {
     Finished: "Finished"
 }
 
-function Author(firstName, lastName) {
-    if(!new.target) {
-        throw Error("You must use the 'new' operator to call the constructor!");
-    }
+class Author {
+    firstName;
+    lastName;
 
-    this.firstName = firstName;
-    this.lastName = lastName;
+    constructor(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }
 
-function Book(title, author, pages, status = Status.PlanToRead) {
-    if(!new.target) {
-        throw Error("You must use the 'new' operator to call the constructor!");
-    }
+class Book {
+    id;
+    title;
+    author;
+    pages;
+    status;
 
-    this.id = crypto.randomUUID();
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.status = status;
+    constructor(title, author, pages, status = Status.PlanToRead) {
+        this.id = crypto.randomUUID();
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.status = status;
+    }
 }
 
 const myLibrary = [];
